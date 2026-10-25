@@ -21,7 +21,7 @@ export default {
 		extend: {
 			fontFamily: {
 				sans: ['Inter', 'system-ui', 'sans-serif'],
-				display: ['Inter', 'system-ui', 'sans-serif'],
+				display: ['"Space Grotesk"', 'Inter', 'system-ui', 'sans-serif'],
 			},
 			colors: {
 				border: 'hsl(var(--border))',
@@ -109,6 +109,13 @@ export default {
 				float: {
 					'0%, 100%': { transform: 'translateY(0)' },
 					'50%': { transform: 'translateY(-10px)' }
+				},
+				marquee: {
+					from: { transform: 'translateX(0)' },
+					to: { transform: 'translateX(-50%)' }
+				},
+				'spin-slow': {
+					to: { transform: 'rotate(360deg)' }
 				}
 			},
 			animation: {
@@ -120,7 +127,9 @@ export default {
 				'slide-in-bottom': 'slide-in-bottom 0.5s ease-out forwards',
 				'slide-in-right': 'slide-in-right 0.5s ease-out forwards',
 				'pulse-slow': 'pulse-slow 3s ease-in-out infinite',
-				'float': 'float 6s ease-in-out infinite'
+				'float': 'float 6s ease-in-out infinite',
+				'marquee': 'marquee 30s linear infinite',
+				'spin-slow': 'spin-slow 12s linear infinite'
 			},
 			transitionProperty: {
 				'height': 'height',

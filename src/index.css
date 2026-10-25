@@ -1,5 +1,4 @@
-
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap");
 
 @tailwind base;
 @tailwind components;
@@ -7,148 +6,169 @@
 
 @layer base {
   :root {
-    --background: 0 0% 98%;
-    --foreground: 240 10% 3.9%;
+    --background: 220 33% 98%;
+    --foreground: 224 40% 10%;
 
     --card: 0 0% 100%;
-    --card-foreground: 240 10% 3.9%;
+    --card-foreground: 224 40% 10%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 240 10% 3.9%;
+    --popover-foreground: 224 40% 10%;
 
-    --primary: 240 5.9% 10%;
-    --primary-foreground: 0 0% 98%;
+    --primary: 252 83% 60%;
+    --primary-foreground: 0 0% 100%;
 
-    --secondary: 240 4.8% 95.9%;
-    --secondary-foreground: 240 5.9% 10%;
+    --secondary: 220 25% 94%;
+    --secondary-foreground: 224 40% 14%;
 
-    --muted: 240 4.8% 95.9%;
-    --muted-foreground: 240 3.8% 46.1%;
+    --muted: 220 25% 94%;
+    --muted-foreground: 222 14% 42%;
 
-    --accent: 240 4.8% 95.9%;
-    --accent-foreground: 240 5.9% 10%;
+    --accent: 188 86% 42%;
+    --accent-foreground: 0 0% 100%;
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 98%;
 
-    --border: 240 5.9% 90%;
-    --input: 240 5.9% 90%;
-    --ring: 240 5.9% 10%;
+    --border: 222 22% 88%;
+    --input: 222 22% 88%;
+    --ring: 252 83% 60%;
 
-    --radius: 0.5rem;
+    --radius: 0.875rem;
+
+    --grid-line: 224 40% 10% / 0.05;
   }
 
   .dark {
-    --background: 240 10% 3.9%;
-    --foreground: 0 0% 98%;
+    --background: 228 40% 5%;
+    --foreground: 220 30% 96%;
 
-    --card: 240 10% 3.9%;
-    --card-foreground: 0 0% 98%;
+    --card: 228 32% 8%;
+    --card-foreground: 220 30% 96%;
 
-    --popover: 240 10% 3.9%;
-    --popover-foreground: 0 0% 98%;
+    --popover: 228 32% 8%;
+    --popover-foreground: 220 30% 96%;
 
-    --primary: 0 0% 98%;
-    --primary-foreground: 240 5.9% 10%;
+    --primary: 252 90% 70%;
+    --primary-foreground: 228 40% 6%;
 
-    --secondary: 240 3.7% 15.9%;
-    --secondary-foreground: 0 0% 98%;
+    --secondary: 228 24% 13%;
+    --secondary-foreground: 220 30% 96%;
 
-    --muted: 240 3.7% 15.9%;
-    --muted-foreground: 240 5% 64.9%;
+    --muted: 228 24% 13%;
+    --muted-foreground: 222 14% 64%;
 
-    --accent: 240 3.7% 15.9%;
-    --accent-foreground: 0 0% 98%;
+    --accent: 188 90% 55%;
+    --accent-foreground: 228 40% 6%;
 
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 0 0% 98%;
 
-    --border: 240 3.7% 15.9%;
-    --input: 240 3.7% 15.9%;
-    --ring: 240 4.9% 83.9%;
+    --border: 228 20% 16%;
+    --input: 228 20% 16%;
+    --ring: 252 90% 70%;
+
+    --grid-line: 220 30% 96% / 0.04;
   }
 
   * {
-    @apply border-border selection:bg-black/10 selection:text-black dark:selection:bg-white/10 dark:selection:text-white;
+    @apply border-border selection:bg-primary/25 selection:text-foreground;
   }
 
   html {
     @apply scroll-smooth;
+    scroll-padding-top: 6rem;
   }
 
   body {
-    @apply bg-background text-foreground antialiased overflow-x-hidden;
-    font-feature-settings: "ss01", "ss02", "cv01", "cv02", "cv03";
+    @apply bg-background text-foreground font-sans antialiased overflow-x-hidden;
+  }
+
+  h1,
+  h2,
+  h3 {
+    @apply font-display tracking-tight;
+  }
+}
+
+@layer components {
+  .container-page {
+    @apply mx-auto w-full max-w-6xl px-5 sm:px-8;
+  }
+
+  .section {
+    @apply relative py-24 md:py-32;
+  }
+
+  .surface {
+    @apply rounded-3xl border border-border/70 bg-card/70 backdrop-blur-xl;
+    box-shadow: 0 1px 0 0 hsl(0 0% 100% / 0.04) inset,
+      0 20px 40px -24px hsl(224 40% 10% / 0.25);
+  }
+
+  .chip {
+    @apply inline-flex items-center rounded-full border border-border bg-secondary/60 px-3 py-1 text-xs font-medium text-secondary-foreground;
+  }
+
+  .btn,
+  .btn-primary,
+  .btn-ghost {
+    @apply inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-semibold transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background;
+  }
+
+  .btn-primary {
+    @apply bg-foreground text-background hover:-translate-y-0.5 hover:shadow-lg hover:shadow-primary/30;
+  }
+
+  .btn-ghost {
+    @apply border border-border bg-card/50 text-foreground backdrop-blur hover:-translate-y-0.5 hover:border-primary/50;
+  }
+
+  .icon-btn {
+    @apply inline-flex h-10 w-10 items-center justify-center rounded-full border border-border bg-card/60 text-foreground backdrop-blur transition-all duration-300 hover:-translate-y-0.5 hover:border-primary/50 hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring;
   }
 }
 
 @layer utilities {
-  .glass {
-    @apply backdrop-blur-xl bg-white/80 border border-white/20 shadow-sm dark:bg-black/30 dark:border-white/10;
+  .text-gradient {
+    @apply bg-gradient-to-r from-primary via-[hsl(220_90%_62%)] to-accent bg-clip-text text-transparent;
+  }
+
+  .bg-grid {
+    background-image: linear-gradient(
+        to right,
+        hsl(var(--grid-line)) 1px,
+        transparent 1px
+      ),
+      linear-gradient(to bottom, hsl(var(--grid-line)) 1px, transparent 1px);
+    background-size: 56px 56px;
+    mask-image: radial-gradient(ellipse 70% 60% at 50% 0%, black 40%, transparent 100%);
   }
 
   .text-balance {
     text-wrap: balance;
   }
-  
-  .text-gradient {
-    @apply bg-gradient-to-br from-black to-black/70 bg-clip-text text-transparent;
-  }
-  
-  .text-gradient-dark {
-    @apply bg-gradient-to-br from-white to-white/70 bg-clip-text text-transparent;
-  }
-  
+
   .hide-scrollbar {
     -ms-overflow-style: none;
     scrollbar-width: none;
   }
-  
+
   .hide-scrollbar::-webkit-scrollbar {
     display: none;
   }
+}
 
-  .animate-delay-100 {
-    animation-delay: 100ms;
-  }
-  
-  .animate-delay-200 {
-    animation-delay: 200ms;
-  }
-  
-  .animate-delay-300 {
-    animation-delay: 300ms;
-  }
-  
-  .animate-delay-400 {
-    animation-delay: 400ms;
-  }
-  
-  .animate-delay-500 {
-    animation-delay: 500ms;
-  }
-  
-  .animate-delay-600 {
-    animation-delay: 600ms;
-  }
-  
-  .animate-delay-700 {
-    animation-delay: 700ms;
-  }
-  
-  .animate-delay-800 {
-    animation-delay: 800ms;
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
   }
 
-  .perspective {
-    perspective: 1000px;
-  }
-  
-  .preserve-3d {
-    transform-style: preserve-3d;
-  }
-
-  .transition-all-cubic {
-    transition: all 0.5s cubic-bezier(0.165, 0.84, 0.44, 1);
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
   }
 }
