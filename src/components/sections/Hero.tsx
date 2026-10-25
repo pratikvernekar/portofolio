@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { ArrowRight, Smartphone, Sparkles } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import SocialLinks from "@/components/common/SocialLinks";
 import { highlights, profile } from "@/data/profile";
 import { skills } from "@/data/skills";
@@ -15,19 +15,12 @@ const Hero = () => (
     id="hero"
     className="relative flex min-h-screen flex-col justify-center overflow-hidden pb-16 pt-32"
   >
-    <div className="pointer-events-none absolute inset-0 -z-10">
-      <div className="bg-grid absolute inset-0" />
-      <div className="absolute -top-40 left-1/2 h-[520px] w-[820px] -translate-x-1/2 rounded-full bg-primary/20 blur-[120px]" />
-      <div className="absolute right-[-10%] top-1/3 h-[360px] w-[360px] rounded-full bg-accent/20 blur-[110px]" />
-    </div>
+    <div className="bg-grid pointer-events-none absolute inset-0 -z-10" />
 
     <div className="container-page grid items-center gap-16 lg:grid-cols-[1.15fr_0.85fr]">
       <div className="order-2 text-center lg:order-1 lg:text-left">
         <motion.span {...fadeUp(0)} className="chip gap-2 py-1.5">
-          <span className="relative flex h-2 w-2">
-            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
-            <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500" />
-          </span>
+          <span className="h-2 w-2 rounded-full bg-emerald-500" />
           Available for new opportunities
         </motion.span>
 
@@ -80,32 +73,17 @@ const Hero = () => (
         transition={{ duration: 0.9, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
         className="relative order-1 mx-auto w-64 sm:w-80 lg:order-2 lg:w-full lg:max-w-sm"
       >
-        <div className="absolute inset-0 rounded-full bg-gradient-to-br from-primary to-accent opacity-40 blur-3xl" />
-        <div className="relative aspect-square rounded-full p-[3px]">
-          <div className="absolute inset-0 animate-spin-slow rounded-full bg-[conic-gradient(from_0deg,hsl(var(--primary)),hsl(var(--accent)),transparent_60%,hsl(var(--primary)))]" />
+        <div className="aspect-square rounded-full bg-gradient-to-br from-primary to-accent p-[3px]">
           <img
             src={profile.image}
             alt={profile.name}
-            className="relative h-full w-full rounded-full border-4 border-background object-cover"
+            width={960}
+            height={960}
+            decoding="async"
+            fetchPriority="high"
+            className="h-full w-full rounded-full border-4 border-background object-cover"
           />
         </div>
-
-        <motion.div
-          animate={{ y: [0, -10, 0] }}
-          transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
-          className="surface absolute -left-6 top-10 flex items-center gap-2 rounded-2xl px-3 py-2 text-sm font-medium sm:-left-10"
-        >
-          <Smartphone size={16} className="text-primary" />
-          React Native
-        </motion.div>
-        <motion.div
-          animate={{ y: [0, 10, 0] }}
-          transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-          className="surface absolute -right-4 bottom-12 flex items-center gap-2 rounded-2xl px-3 py-2 text-sm font-medium sm:-right-8"
-        >
-          <Sparkles size={16} className="text-accent" />
-          Pixel-perfect UI
-        </motion.div>
       </motion.div>
     </div>
 
@@ -121,22 +99,14 @@ const Hero = () => (
       </dl>
     </motion.div>
 
-    <div className="relative mt-14 overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_15%,black_85%,transparent)]">
-      <ul className="flex w-max animate-marquee gap-12">
-        {[...skills, ...skills].map((skill, index) => (
-          <li
-            key={`${skill.name}-${index}`}
-            aria-hidden={index >= skills.length}
-            className="flex items-center gap-3 text-muted-foreground"
-          >
-            <img src={skill.icon} alt="" className="h-7 w-7 object-contain" />
-            <span className="font-display text-lg font-semibold">
-              {skill.name}
-            </span>
-          </li>
-        ))}
-      </ul>
-    </div>
+    <ul className="container-page mt-14 flex flex-wrap items-center justify-center gap-x-8 gap-y-4">
+      {skills.map((skill) => (
+        <li key={skill.name} className="flex items-center gap-3 text-muted-foreground">
+          <img src={skill.icon} alt="" className="h-7 w-7 object-contain" />
+          <span className="font-display text-lg font-semibold">{skill.name}</span>
+        </li>
+      ))}
+    </ul>
   </section>
 );
 

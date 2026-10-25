@@ -32,11 +32,8 @@ const Contact = () => {
   return (
     <section id="contact" className="section">
       <div className="container-page">
-        <Reveal className="surface relative overflow-hidden p-8 sm:p-12 lg:p-16">
-          <div className="pointer-events-none absolute -right-24 -top-24 h-80 w-80 rounded-full bg-primary/25 blur-[100px]" />
-          <div className="pointer-events-none absolute -bottom-24 -left-24 h-80 w-80 rounded-full bg-accent/20 blur-[100px]" />
-
-          <div className="relative grid gap-12 lg:grid-cols-[1.2fr_1fr] lg:items-center">
+        <Reveal className="surface p-8 sm:p-12 lg:p-16">
+          <div className="grid gap-12 lg:grid-cols-[1.2fr_1fr] lg:items-center">
             <div>
               <span className="mb-4 inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.2em] text-primary">
                 <span className="h-px w-6 bg-primary" />

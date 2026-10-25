@@ -39,7 +39,7 @@ const Navbar = () => {
         className={cn(
           "mx-auto flex max-w-5xl items-center justify-between rounded-full border px-3 py-2 transition-all duration-500",
           scrolled
-            ? "border-border/80 bg-background/70 shadow-lg shadow-black/5 backdrop-blur-xl"
+            ? "border-border bg-background shadow-md"
             : "border-transparent bg-transparent"
         )}
       >
@@ -123,7 +123,7 @@ const Navbar = () => {
         {menuOpen && (
           <>
             <motion.div
-              className="fixed inset-0 -z-10 bg-background/60 backdrop-blur-sm md:hidden"
+              className="fixed inset-0 -z-10 bg-background/80 md:hidden"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
