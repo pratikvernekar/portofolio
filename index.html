@@ -3,11 +3,29 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" type="image/png" href="./src//assets/pf.png">
-    <title>Portfolio</title>
-    <meta name="description" content="Lovable Generated Project" />
-    <meta name="author" content="Lovable" />
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <title>Pratik Vernekar · Frontend Developer</title>
+    <meta
+      name="description"
+      content="Pratik Vernekar — Frontend developer specializing in React and React Native, building clean, fast web and mobile experiences."
+    />
+    <meta name="author" content="Pratik Vernekar" />
+    <meta name="theme-color" content="#0a0d16" />
+    <meta property="og:title" content="Pratik Vernekar · Frontend Developer" />
+    <meta
+      property="og:description"
+      content="React & React Native developer. Explore my projects and get in touch."
+    />
     <meta property="og:image" content="/og-image.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <script>
+      try {
+        const saved = localStorage.getItem("theme");
+        const dark = saved ? saved === "dark" : matchMedia("(prefers-color-scheme: dark)").matches;
+        if (dark) document.documentElement.classList.add("dark");
+      } catch {}
+    </script>
   </head>
 
   <body>
