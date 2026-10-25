@@ -1,5 +1,5 @@
 import { Github, Instagram, Linkedin } from "lucide-react";
-import profileImage from "@/assets/profile.jpeg";
+import profileImage from "@/assets/optimized/profile.webp";
 import type { Highlight, NavLink, SocialLink } from "@/types/portfolio";
 
 export const profile = {

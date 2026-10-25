@@ -1,12 +1,12 @@
-import { useEffect, useState, type ComponentType } from "react";
-import { AnimatePresence, motion } from "framer-motion";
+import { useEffect, useRef, useState, type ComponentType } from "react";
 import { ExternalLink, Github } from "lucide-react";
 import { FaApple, FaGooglePlay } from "react-icons/fa";
 import Reveal from "@/components/common/Reveal";
+import { useSlideshowTurn } from "@/hooks/useSlideshowTurn";
 import { cn } from "@/lib/utils";
 import type { Project } from "@/types/portfolio";
 
-const SLIDE_INTERVAL_MS = 2200;
+const SLIDE_INTERVAL_MS = 3200;
 
 type ProjectCardProps = {
   project: Project;
@@ -14,20 +14,47 @@ type ProjectCardProps = {
 };
 
 const ProjectCard = ({ project, reversed = false }: ProjectCardProps) => {
+  const frameRef = useRef<HTMLDivElement>(null);
   const [current, setCurrent] = useState(0);
-  const [paused, setPaused] = useState(false);
+  const [hovered, setHovered] = useState(false);
   const { images, accent, links } = project;
+  const { active, setVisibleRatio } = useSlideshowTurn(project.id);
+  const playing = active && !hovered && images.length > 1;
 
   useEffect(() => {
-    if (paused || images.length < 2) return;
-    const id = setInterval(
-      () => setCurrent((index) => (index + 1) % images.length),
-      SLIDE_INTERVAL_MS
-    );
-    return () => clearInterval(id);
-  }, [paused, images.length]);
+    const frame = frameRef.current;
+    if (!frame) return;
 
-  const actions: { label: string; href?: string; icon: ComponentType<{ size?: number }> }[] = [
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setVisibleRatio(entry.isIntersecting ? entry.intersectionRatio : 0);
+      },
+      { threshold: [0, 0.35, 0.6, 1] }
+    );
+
+    observer.observe(frame);
+    return () => observer.disconnect();
+  }, [setVisibleRatio]);
+
+  useEffect(() => {
+    if (!playing) return;
+    const id = window.setInterval(() => {
+      setCurrent((index) => (index + 1) % images.length);
+    }, SLIDE_INTERVAL_MS);
+    return () => window.clearInterval(id);
+  }, [playing, images.length]);
+
+  useEffect(() => {
+    if (!playing) return;
+    const next = new Image();
+    next.src = images[(current + 1) % images.length];
+  }, [playing, current, images]);
+
+  const actions: {
+    label: string;
+    href?: string;
+    icon: ComponentType<{ size?: number }>;
+  }[] = [
     { label: "App Store", href: links.appStore, icon: FaApple },
     { label: "Google Play", href: links.playStore, icon: FaGooglePlay },
     { label: "Live site", href: links.live, icon: ExternalLink },
@@ -36,8 +63,9 @@ const ProjectCard = ({ project, reversed = false }: ProjectCardProps) => {
 
   return (
     <Reveal>
-      <article className="surface group grid overflow-hidden p-3 lg:grid-cols-2">
+      <article className="surface grid overflow-hidden p-3 lg:grid-cols-2">
         <div
+          ref={frameRef}
           className={cn(
             "relative flex h-[380px] items-center justify-center overflow-hidden rounded-[1.25rem] sm:h-[440px]",
             reversed && "lg:order-2"
@@ -45,28 +73,24 @@ const ProjectCard = ({ project, reversed = false }: ProjectCardProps) => {
           style={{
             background: `linear-gradient(135deg, ${accent[0]}, ${accent[1]})`,
           }}
-          onMouseEnter={() => setPaused(true)}
-          onMouseLeave={() => setPaused(false)}
+          onMouseEnter={() => setHovered(true)}
+          onMouseLeave={() => setHovered(false)}
         >
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(255,255,255,0.25),transparent_55%)]" />
+          <img
+            src={images[current]}
+            alt={`${project.title} screenshot ${current + 1} of ${images.length}`}
+            width={1280}
+            height={593}
+            loading="lazy"
+            decoding="async"
+            className="relative h-[88%] w-auto object-contain"
+          />
 
-          <AnimatePresence mode="popLayout" initial={false}>
-            <motion.img
-              key={current}
-              src={images[current]}
-              alt={`${project.title} screenshot ${current + 1}`}
-              initial={{ opacity: 0, y: 24, scale: 0.96 }}
-              animate={{ opacity: 1, y: 0, scale: 1 }}
-              exit={{ opacity: 0, y: -24, scale: 0.96 }}
-              transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] as const }}
-              className="relative h-[88%] w-auto object-contain drop-shadow-2xl transition-transform duration-500 group-hover:scale-[1.03]"
-            />
-          </AnimatePresence>
-
-          <div className="absolute bottom-4 left-1/2 flex -translate-x-1/2 gap-1.5 rounded-full bg-black/20 px-2.5 py-1.5 backdrop-blur">
+          <div className="absolute bottom-4 left-1/2 flex -translate-x-1/2 gap-1.5 rounded-full bg-black/35 px-2.5 py-1.5">
             {images.map((_, index) => (
               <button
                 key={index}
+                type="button"
                 onClick={() => setCurrent(index)}
                 aria-label={`Show screenshot ${index + 1}`}
                 className={cn(
@@ -84,10 +108,7 @@ const ProjectCard = ({ project, reversed = false }: ProjectCardProps) => {
           </span>
 
           <h3 className="mt-5 text-3xl font-bold sm:text-4xl">{project.title}</h3>
-          <p
-            className="mt-2 font-medium"
-            style={{ color: accent[1] }}
-          >
+          <p className="mt-2 font-medium" style={{ color: accent[1] }}>
             {project.tagline}
           </p>
 

@@ -1,25 +1,14 @@
 import type { Project } from "@/types/portfolio";
-
-const loadImages = (modules: Record<string, string>, order: string[]) =>
-  order.map((name) => {
-    const match = Object.entries(modules).find(([filePath]) => {
-      const fileName = decodeURIComponent(filePath.split("/").pop() ?? "");
-      return fileName.split("?")[0] === name;
-    });
-    if (!match) throw new Error(`Missing project image: ${name}`);
-    return match[1];
-  });
-
-// Relative globs: Vite does not reliably expand the "@" alias inside import.meta.glob.
-const mdImages = import.meta.glob<string>("../assets/mdImages/*.png", {
-  eager: true,
-  import: "default",
-});
-
-const apImages = import.meta.glob<string>("../assets/apImages/*.png", {
-  eager: true,
-  import: "default",
-});
+import md1 from "@/assets/optimized/md-1.webp";
+import md2 from "@/assets/optimized/md-2.webp";
+import md3 from "@/assets/optimized/md-3.webp";
+import md4 from "@/assets/optimized/md-4.webp";
+import md5 from "@/assets/optimized/md-5.webp";
+import ap1 from "@/assets/optimized/ap-1.webp";
+import ap2 from "@/assets/optimized/ap-2.webp";
+import ap3 from "@/assets/optimized/ap-3.webp";
+import ap4 from "@/assets/optimized/ap-4.webp";
+import ap5 from "@/assets/optimized/ap-5.webp";
 
 export const projects: Project[] = [
   {
@@ -37,12 +26,7 @@ export const projects: Project[] = [
       "OneSignal",
       "Geolocation",
     ],
-    images: loadImages(
-      mdImages,
-      ["2", "1", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14"].map(
-        (n) => `${n}.png`
-      )
-    ),
+    images: [md1, md2, md3, md4, md5],
     type: "app",
     links: {
       appStore: "https://apps.apple.com/in/app/mdhealthtrak/id6743380687",
@@ -58,10 +42,7 @@ export const projects: Project[] = [
     description:
       "A streaming platform for inspirational content on Ayurveda, Yoga and Herbalism. It features documentaries, films and wellness practices covering mindfulness, breathwork and traditional healing remedies — available on iOS and Android.",
     tags: ["React Native", "TypeScript", "Redux", "Firebase", "Video Player"],
-    images: loadImages(
-      apImages,
-      ["1", "9", "4", "8", "3", "2", "7", "5", "6"].map((n) => `ap (${n}).png`)
-    ),
+    images: [ap1, ap2, ap3, ap4, ap5],
     type: "app",
     links: {
       appStore: "https://apps.apple.com/in/app/ayurprana/id6469480400",
